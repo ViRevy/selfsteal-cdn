@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexlify — Edge CDN & Acceleration</title>
+  <meta name="description" content="Глобальная CDN-сеть Nexlify. 180+ PoP, мгновенный кэш, DDoS-защита и edge-логика. Ускорение сайтов и API по всему миру.">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg2: #111827;
+      --bg3: #1a2332;
+      --border: #243044;
+      --text: #e8eef7;
+      --muted: #8b9bb4;
+      --accent: #3b82f6;
+      --accent2: #22d3ee;
+      --green: #34d399;
+      --orange: #fbbf24;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* nav */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(11,18,32,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px; max-width: 1100px; margin: 0 auto; padding: 0 24px;
+    }
+    .logo {
+      font-weight: 700; font-size: 18px; letter-spacing: -.02em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo-mark {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: grid; place-items: center; font-size: 14px;
+    }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { color: var(--muted); font-size: 14px; font-weight: 500; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      border: none; cursor: pointer; transition: .15s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #2563eb);
+      color: #fff;
+    }
+    .btn-primary:hover { filter: brightness(1.1); text-decoration: none; }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--muted); text-decoration: none; }
+
+    /* hero */
+    .hero {
+      padding: 80px 0 60px;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,.18), transparent),
+        var(--bg);
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center;
+    }
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(34,211,238,.1); border: 1px solid rgba(34,211,238,.25);
+      color: var(--accent2); font-size: 12px; font-weight: 600;
+      padding: 4px 10px; border-radius: 20px; margin-bottom: 16px;
+    }
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 8px var(--green); animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .4; }
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 44px); font-weight: 700;
+      letter-spacing: -.03em; line-height: 1.15; margin-bottom: 16px;
+    }
+    .hero p.lead {
+      color: var(--muted); font-size: 17px; max-width: 480px; margin-bottom: 28px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* metrics card */
+    .metrics-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,.3);
+    }
+    .metrics-title {
+      font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+      color: var(--muted); margin-bottom: 16px; font-weight: 600;
+    }
+    .metrics-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .metric {
+      background: var(--bg3); border-radius: 10px; padding: 14px 16px;
+    }
+    .metric-val {
+      font-size: 22px; font-weight: 700; letter-spacing: -.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .metric-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .metric-val.green { color: var(--green); }
+    .metric-val.blue { color: var(--accent2); }
+
+    /* sections */
+    section { padding: 64px 0; }
+    section h2 {
+      font-size: 28px; font-weight: 700; letter-spacing: -.02em;
+      margin-bottom: 8px;
+    }
+    .section-sub { color: var(--muted); margin-bottom: 36px; max-width: 520px; }
+
+    /* features */
+    .features {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    @media (max-width: 800px) { .features { grid-template-columns: 1fr; } }
+    .feature {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      transition: border-color .15s;
+    }
+    .feature:hover { border-color: #3a4a66; }
+    .feature-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(59,130,246,.12); color: var(--accent);
+      display: grid; place-items: center; font-size: 18px; margin-bottom: 14px;
+    }
+    .feature h3 { font-size: 16px; margin-bottom: 6px; }
+    .feature p { color: var(--muted); font-size: 14px; }
+
+    /* pops */
+    .pops-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    }
+    @media (max-width: 700px) { .pops-grid { grid-template-columns: 1fr 1fr; } }
+    .pop {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .pop-name { font-weight: 600; font-size: 14px; }
+    .pop-ms { font-size: 13px; color: var(--green); font-variant-numeric: tabular-nums; }
+    .pop-status {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+      margin-right: 8px; flex-shrink: 0;
+    }
+
+    /* pricing */
+    .pricing {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    @media (max-width: 800px) { .pricing { grid-template-columns: 1fr; } }
+    .plan {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px; position: relative;
+    }
+    .plan.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 20px 40px rgba(59,130,246,.15);
+    }
+    .plan-badge {
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
+      padding: 3px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: .04em;
+    }
+    .plan h3 { font-size: 18px; margin-bottom: 4px; }
+    .plan-price {
+      font-size: 32px; font-weight: 700; margin: 12px 0 4px;
+      letter-spacing: -.02em;
+    }
+    .plan-price span { font-size: 15px; color: var(--muted); font-weight: 500; }
+    .plan-desc { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+    .plan ul { list-style: none; margin-bottom: 24px; }
+    .plan li {
+      padding: 6px 0; font-size: 14px; color: var(--muted);
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .plan li::before { content: "✓"; color: var(--green); font-weight: 700; }
+
+    /* status bar */
+    .status-bar {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .status-ok {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 600; color: var(--green);
+    }
+
+    /* footer */
+    footer {
+      border-top: 1px solid var(--border); padding: 40px 0 32px;
+      color: var(--muted); font-size: 13px;
+    }
+    .footer-grid {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px;
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: var(--muted); }
+    .footer-links a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <div class="logo-mark">N</div>
+      Nexlify
+    </div>
+    <div class="nav-links">
+      <a href="#features">Возможности</a>
+      <a href="#network">Сеть</a>
+      <a href="#pricing">Тарифы</a>
+      <a href="#status">Статус</a>
+      <a href="#" class="btn btn-primary">Консоль</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="badge"><span class="badge-dot"></span> Все системы в норме · 180 PoP</div>
+      <h1>Edge CDN для сайтов<br>и API без тормозов</h1>
+      <p class="lead">
+        Кэш на краю, умная маршрутизация и защита от атак.
+        Трафик доходит до пользователя за миллисекунды — из любой точки мира.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary">Начать бесплатно</a>
+        <a href="#network" class="btn btn-ghost">Смотреть сеть →</a>
+      </div>
+    </div>
+    <div class="metrics-card">
+      <div class="metrics-title">Live network · обновляется каждые 5 с</div>
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="metric-val blue" id="rps">12 480</div>
+          <div class="metric-label">req/s сейчас</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val green" id="hit">94.2%</div>
+          <div class="metric-label">cache hit ratio</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val" id="lat">18 ms</div>
+          <div class="metric-label">median latency</div>
+        </div>
+        <div class="metric">
+          <div class="metric-val green">99.99%</div>
+          <div class="metric-label">uptime 30d</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="container">
+    <h2>Всё, что нужно на edge</h2>
+    <p class="section-sub">Один продукт вместо связки CDN + WAF + балансировщик.</p>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <h3>Мгновенный кэш</h3>
+        <p>Статика и API-ответы отдаются с ближайшего PoP. Purge и soft-revalidate из панели или API.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🛡</div>
+        <h3>DDoS & WAF</h3>
+        <p>L3–L7 фильтрация, rate-limit, geo-block и bot management без отдельного сервиса.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🌍</div>
+        <h3>180+ точек присутствия</h3>
+        <p>Европа, Азия, СНГ, США. Anycast + smart routing — пользователь всегда на ближайшем edge.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📦</div>
+        <h3>Image & video</h3>
+        <p>On-the-fly resize, WebP/AVIF, HLS/DASH сегменты с origin-shield.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔌</div>
+        <h3>Edge Workers</h3>
+        <p>JS на краю: A/B, auth, redirects, header rewrite — без нагрузки на origin.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <h3>Realtime analytics</h3>
+        <p>RPS, latency, cache, ошибки по регионам. Webhook и экспорт в Prometheus.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="network" style="background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <h2>Сеть прямо сейчас</h2>
+    <p class="section-sub">Выборка PoP и latency до origin в Москве.</p>
+    <div class="pops-grid" id="pops">
+      <div class="pop"><span style="display:flex;align-items:center"><span class="pop-status"></span><span class="pop-name">Frankfurt</span></span><span class="pop-ms">12 ms</span></div>
+      <div class="pop"><span style="display:flex;align-items:center"><span class="pop-status"></span><span class="pop-name">Amsterdam</span></span><span class="pop-ms">14 ms</span></div>
+      <div class="pop"><span style="display:flex;align-items:center"><span class="pop-status"></span><span class="pop-name">London</span></span><span class="pop-ms">28 ms</span></div>
+      <div class="pop"><span style="display:flex;align-items:center"><span class="pop-status"></span><span class="pop-name">Warsaw</span></span><span class="pop-ms">9 ms</span></div>
+      <div class="pop"><span style="display:flex;align-items:center"><span class="pop-status"></span><span class="pop-name">Helsinki</span></span><span class="pop-ms">11 ms</span></div>
+      <div class="pop"><span style="display:flex;align-items:center"><span class="pop-status"></span><span class="pop-name">Istanbul</span></span><span class="pop-ms">32 ms</span></div>
+      <div class="pop"><span style="display:flex;align-items:center"><span class="pop-status"></span><span class="pop-name">Singapore</span></span><span class="pop-ms">118 ms</span></div>
+      <div class="pop"><span style="display:flex;align-items:center"><span class="pop-status"></span><span class="pop-name">Tokyo</span></span><span class="pop-ms">142 ms</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="container">
+    <h2>Простые тарифы</h2>
+    <p class="section-sub">Платите за трафик. Без скрытых fee за запросы.</p>
+    <div class="pricing">
+      <div class="plan">
+        <h3>Starter</h3>
+        <div class="plan-price">0 ₽ <span>/ мес</span></div>
+        <p class="plan-desc">Для тестов и пет-проектов</p>
+        <ul>
+          <li>100 ГБ трафика</li>
+          <li>1 домен</li>
+          <li>Базовый кэш + HTTPS</li>
+          <li>Community support</li>
+        </ul>
+        <a href="#" class="btn btn-ghost" style="width:100%;justify-content:center">Создать аккаунт</a>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">Популярный</div>
+        <h3>Growth</h3>
+        <div class="plan-price">2 490 ₽ <span>/ мес</span></div>
+        <p class="plan-desc">Сайты и API в проде</p>
+        <ul>
+          <li>2 ТБ трафика</li>
+          <li>10 доменов</li>
+          <li>WAF + rate-limit</li>
+          <li>Edge Workers 50k inv/день</li>
+          <li>Приоритетная поддержка</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="width:100%;justify-content:center">Выбрать Growth</a>
+      </div>
+      <div class="plan">
+        <h3>Scale</h3>
+        <div class="plan-price">по запросу</div>
+        <p class="plan-desc">Высокие нагрузки и SLA</p>
+        <ul>
+          <li>Безлимит / dedicated PoP</li>
+          <li>Custom WAF rules</li>
+          <li>99.99% SLA</li>
+          <li>Выделенный менеджер</li>
+          <li>On-prem / private</li>
+        </ul>
+        <a href="#" class="btn btn-ghost" style="width:100%;justify-content:center">Связаться</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="status">
+  <div class="container">
+    <div class="status-bar">
+      <div class="status-ok">
+        <span class="badge-dot" style="display:inline-block"></span>
+        All systems operational
+      </div>
+      <div style="color:var(--muted);font-size:13px">
+        Последний инцидент: нет · обновлено <span id="upd">только что</span>
+      </div>
+      <a href="#">status.nexlify.io →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="logo" style="margin-bottom:8px">
+        <div class="logo-mark" style="width:22px;height:22px;font-size:11px">N</div>
+        Nexlify
+      </div>
+      <div>© 2026 Nexlify Edge Platform. Все права защищены.</div>
+    </div>
+    <div class="footer-links">
+      <a href="#">Документация</a>
+      <a href="#">API</a>
+      <a href="#">Статус</a>
+      <a href="#">Поддержка</a>
+      <a href="#">Условия</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // лёгкая «живость» метрик
+  function jitter(base, range) {
+    return Math.round(base + (Math.random() - 0.5) * range);
+  }
+  function tick() {
+    document.getElementById('rps').textContent = jitter(11800, 1800).toLocaleString('ru-RU');
+    document.getElementById('hit').textContent = (93.5 + Math.random() * 1.5).toFixed(1) + '%';
+    document.getElementById('lat').textContent = jitter(16, 8) + ' ms';
+    document.getElementById('upd').textContent = 'только что';
+  }
+  setInterval(tick, 5000);
+</script>
+</body>
+</html>
